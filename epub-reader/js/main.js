@@ -1,8 +1,10 @@
 $(function () {
 
-    var font_size = 100;
+    // Default settings: font size, theme, and view
+    var font_size = 125;
     var themes = [];
     var current_theme;
+    //var toc = {};
 
     let handler = TreineticEpubReader.handler();
 
@@ -37,6 +39,7 @@ $(function () {
     handler.registerEvent("onTOCLoaded", (hasTOC) => {
         if (hasTOC) {
             var toc = handler.getTOCJson();
+            console.log("hello");
             $('.drawer-section').empty();
             $('.drawer-section').append($(crateOL_Recursively(JSON.parse(toc))));
         }
@@ -51,12 +54,16 @@ $(function () {
     setTheams(themes);
     setViewType("h");
 
+    // Upload epub file
     var config = TreineticEpubReader.config();
     config.jsLibRoot = "assets/workers/";
     config.loader = "one"
     TreineticEpubReader.create("#epub-reader-frame");
+    // This is where you specify the url to the epub file
     TreineticEpubReader.open("assets/epub/alice.epub");
 
+    // Configure font size 
+    /*
     $(".increase-font-size").on("click", function () {
         var ext = TreineticEpubReader.handler();
         var range = ext.getRecommendedFontSizeRange();
@@ -77,14 +84,18 @@ $(function () {
             ext.changeFontSize(font_size);
             setViewFontSize(font_size);
         }
-    });
+    }); */
 
+
+    // Configure theme 
     $("body").on("click", ".theme-color-block", function () {
         var id = $(this).data("theme-id");
         setViewTheme(id);
         TreineticEpubReader.handler().setTheme(id);
     });
 
+
+    // Configure theme
     $(".vertical-view").on("click", function () {
         setViewType("v");
         $("#reading-area").removeClass("reading-area-margin");
@@ -96,7 +107,7 @@ $(function () {
     });
 
 
-
+    // Configure page navigation
     $(".prev-button").on("click", function () {
         $(".pre-next-wrapper").removeClass("noPreview");
         $(".pre-next-wrapper").removeClass("noNext");
@@ -117,17 +128,66 @@ $(function () {
         let etc = TreineticEpubReader.handler();
         if (etc.hasNextPage()) {
             etc.nextPage();
+            // META DATA 
+            //prevObject[0].childNodes[0].textContent
+            //console.log(etc.metadata);
+
+
+            console.log("Next page loaded");
+            // If next page is a new chapter
+
+
+            // PAGE COUNTER 
+            var pageCounter = etc.reader.getPaginationInfo().openPages[0].spineItemPageIndex;
+            console.log(pageCounter);
+            if (pageCounter == 8) {
+                // Show reward pop-up
+                alert(1);
+                // $(".reader-section").append("<script> alert(1); </script>");
+            }
+            if (pageCounter == 14) {
+                // Show reward pop-up
+                alert(2);
+                // $(".reader-section").append("<script> alert(1); </script>");
+            }
+            if (pageCounter == 20) {
+                // Show reward pop-up
+                alert(3);
+                // $(".reader-section").append("<script> alert(1); </script>");
+            }
+
             if (!etc.hasNextPage()) {
                 $(".pre-next-wrapper").addClass("noNext");
             }
         } else {
             $(".pre-next-wrapper").addClass("noNext");
         }
+
+        /*
+        handler.registerEvent("onTOCLoaded", (hasTOC) => {
+        if (hasTOC) {
+            var toc = handler.getTOCJson();
+            $('.drawer-section').empty();
+            $('.drawer-section').append($(crateOL_Recursively(JSON.parse(toc))));
+        }
+        });
+
+        function crateOL_Recursively(json) {
+        var string = "<ol class='toc-ol'>";
+        json.some(function (item) {
+            string += `<li><a class="toc-item" data-link="${item.Id_link}">${item.name}</a>`;
+            if (item.sub.length > 0) {
+                string += crateOL_Recursively(item.sub);
+            }
+            string += "</li>";
+        });
+        return string + "</ol>";
+    }
+        */
+
     });
 
-    $(".drawer-box").on("click", function () {
-        toggleDrawer();
-    });
+    // Configure table of contents 
     $(".drawer-backdrop").on("click", function () {
         toggleDrawer();
     });
@@ -142,8 +202,20 @@ $(function () {
         $(".drawer-section").removeClass("drawer-section-show");
     })
 
+    function crateOL_Recursively(json) {
+        var string = "<ol class='toc-ol'>";
+        json.some(function (item) {
+            string += `<li><a class="toc-item" data-link="${item.Id_link}">${item.name}</a>`;
+            if (item.sub.length > 0) {
+                string += crateOL_Recursively(item.sub);
+            }
+            string += "</li>";
+        });
+        return string + "</ol>";
+    }
 
 
+    // Setters for configuration
     function setViewFontSize(size) {
         $(".font-size-view").html(size + "%");
     }
@@ -179,20 +251,5 @@ $(function () {
             $(".theme-buttons-section").append('<div class="theme-color-block ' + theme.id + '"  data-theme-id="' + theme.id + '"></div>');
         });
     }
-
-
-    function crateOL_Recursively(json) {
-        var string = "<ol class='toc-ol'>";
-        json.some(function (item) {
-            string += `<li><a class="toc-item" data-link="${item.Id_link}">${item.name}</a>`;
-            if (item.sub.length > 0) {
-                string += crateOL_Recursively(item.sub);
-            }
-            string += "</li>";
-        });
-        return string + "</ol>";
-    }
-
-
 
 });
