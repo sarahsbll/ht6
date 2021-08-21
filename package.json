@@ -1,0 +1,19 @@
+{
+  "name": "ht6",
+  "version": "1.0.0",
+  "description": "\"# ht6\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catai9/ht6.git"
+  },
+  "author": "Amy Tai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/catai9/ht6/issues"
+  },
+  "homepage": "https://github.com/catai9/ht6#readme"
+}
