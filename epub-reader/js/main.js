@@ -140,20 +140,34 @@ $(function () {
             // PAGE COUNTER 
             var pageCounter = etc.reader.getPaginationInfo().openPages[0].spineItemPageIndex;
             console.log(pageCounter);
-            if (pageCounter == 8) {
-                // Show reward pop-up
-                alert(1);
-                // $(".reader-section").append("<script> alert(1); </script>");
+
+            const modalCont = document.getElementById('modalContainer');
+            const modalClose = document.getElementById('close');
+            const qrCode = document.getElementById('qr');
+
+            if (pageCounter == 8) { // or 13 pg
+                // Show reward Alice Drinks QR Code:  https://storage.echoar.xyz/wispy-violet-4999/cbd63dcb-23e8-43c1-ade1-7bd08bf8328e
+
+                qrCode.setAttribute("src", "https://storage.echoar.xyz/wispy-violet-4999/cbd63dcb-23e8-43c1-ade1-7bd08bf8328e");
+                modalCont.classList.add('show');
+                modalClose.addEventListener('click', () => {
+                    modalCont.classList.remove('show');
+
+                });
+
             }
-            if (pageCounter == 14) {
-                // Show reward pop-up
-                alert(2);
-                // $(".reader-section").append("<script> alert(1); </script>");
+            if (pageCounter == 14) { //14 in 1920 or 20 pg
+                // Show reward Lego Street Fighter White Rabbit: https://storage.echoar.xyz/wispy-violet-4999/d5bc0ca4-a48d-463e-b5be-dfaa1547f329
+                qrCode.setAttribute("src", "https://storage.echoar.xyz/wispy-violet-4999/d5bc0ca4-a48d-463e-b5be-dfaa1547f329");
+                modalCont.classList.add('show');
+                modalClose.addEventListener('click', () => {
+                    modalCont.classList.remove('show');
+
+                });
             }
             if (pageCounter == 20) {
                 // Show reward pop-up
                 alert(3);
-                // $(".reader-section").append("<script> alert(1); </script>");
             }
 
             if (!etc.hasNextPage()) {

@@ -77,6 +77,50 @@
 }
 
 
+/* POP-UP DESIGN */
+.modal-container {
+    /*display: inline-block; */  /*none*/
+    /*display: none;*/
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0; /*0*/
+    pointer-events: none;
+    
+}
+.modal-container.show{
+    pointer-events: auto;
+    opacity: 1;
+}
+.modal {
+    background-color: #ffffff;
+    display:grid;
+    align-items:center;
+    justify-content: center;
+    position: fixed;
+    top: 150;
+    left: 150;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+.head {
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.code {
+    margin-left: 300px;
+    margin-right: 150px;
+}
+
+.para{
+    margin-left: 320px;
+    margin-right: 150px;
+}
+
+/* POP-UP DESIGN */
+
+
 
 .font-size-block {
     width: 28px;
